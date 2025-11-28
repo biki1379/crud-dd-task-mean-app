@@ -1,30 +1,30 @@
-In this DevOps task, you need to build and deploy a full-stack CRUD application using the MEAN stack (MongoDB, Express, Angular 15, and Node.js). The backend will be developed with Node.js and Express to provide REST APIs, connecting to a MongoDB database. The frontend will be an Angular application utilizing HTTPClient for communication.  
+MEAN CRUD Task – Deployment Using Docker + EC2
 
-The application will manage a collection of tutorials, where each tutorial includes an ID, title, description, and published status. Users will be able to create, retrieve, update, and delete tutorials. Additionally, a search box will allow users to find tutorials by title.
+This project is a full CRUD application built using MongoDB, Express, Angular, Node.js, containerized using Docker, and deployed on AWS EC2 using Docker Compose & GitHub Actions CI/CD pipeline.
+Frontend (Angular UI) - http://43.204.143.66:8081/tutorials.
+Backend API (Node/Express) - http://43.204.143.66/api/tutorials
 
-## Project setup
+Features Implemented
 
-### Node.js Server
+CRUD Functionalities
 
-cd backend
+Create tutorial
+View tutorial list
+Update details
+Delete single or all records
+Filter by title
 
-npm install
+ Component    Technology                        
+  
+ Frontend     Angular 15 + Bootstrap            
+ Backend      Node.js + Express                 
+ Database     MongoDB                           
+ Deployment   Docker + Docker Compose + AWS EC2 
+ CI/CD        GitHub Actions                    
 
-You can update the MongoDB credentials by modifying the `db.config.js` file located in `app/config/`.
 
-Run `node server.js`
 
-### Angular Client
 
-cd frontend
 
-npm install
 
-Run `ng serve --port 8081`
-
-You can modify the `src/app/services/tutorial.service.ts` file to adjust how the frontend interacts with the backend.
-
-Navigate to `http://localhost:8081/`
-
-CI/CD test deployed @ 28-11-2025
-
+                     
