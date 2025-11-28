@@ -1,0 +1,46 @@
+name: CI-CD Deploy
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build Frontend Image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/crud-mean-frontend ./frontend
+
+    - name: Build Backend Image
+      run: |
+        docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/crud-mean-backend ./backend
+
+    - name: Push Frontend to DockerHub
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/crud-mean-frontend
+
+    - name: Push Backend to DockerHub
+      run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/crud-mean-backend
+
+    - name: SSH into EC2 & Deploy
+      uses: appleboy/ssh-action@v0.1.10
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        script: |
+          cd /home/ubuntu/crud-dd-task-mean-app
+          sudo docker-compose down
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/crud-mean-frontend
+          sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/crud-mean-backend
+          sudo docker-compose up -d --build
