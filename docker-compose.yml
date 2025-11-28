@@ -26,9 +26,7 @@ services:
     container_name: angular-frontend
     restart: always
     ports:
-      - "80:80"
-    volumes:
-      - ./frontend/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - "8081:80"
     depends_on:
       - backend
 
