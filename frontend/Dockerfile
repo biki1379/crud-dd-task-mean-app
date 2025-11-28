@@ -1,4 +1,6 @@
-# ---- Build Stage ----
+# ==========================
+# 1) Build Angular App
+# ==========================
 FROM node:18-alpine AS build
 
 WORKDIR /app
@@ -9,13 +11,16 @@ RUN npm install
 COPY . .
 RUN npm run build --prod
 
-# ---- Run Stage (Nginx) ----
+
+# ==========================
+# 2) Run with Nginx
+# ==========================
 FROM nginx:alpine
 
-# Custom Nginx config for Angular SPA
+
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Copy built Angular app
+
 COPY --from=build /app/dist/angular-15-crud/ /usr/share/nginx/html
 
 EXPOSE 80
